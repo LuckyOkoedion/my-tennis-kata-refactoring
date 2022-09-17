@@ -6,6 +6,8 @@ public class TennisGame3 implements ITennisGame {
     private int player1Score;
     private String firstPlayerName;
     private String secondPlayerName;
+    private String isLoveOrAllText;
+    private String deuceOrAdvantageOrWinText;
 
     public TennisGame3(String firstPlayerName, String secondPlayerName) {
         this.firstPlayerName = firstPlayerName;
@@ -13,16 +15,12 @@ public class TennisGame3 implements ITennisGame {
     }
 
     public String getScore() {
-        String s;
-        if (player1Score < 4 && player2Score < 4 && !(player1Score + player2Score == 6)) {
-            String[] p = new String[]{"Love", "Fifteen", "Thirty", "Forty"};
-            s = p[player1Score];
-            return (player1Score == player2Score) ? s + "-All" : s + "-" + p[player2Score];
+
+        if (isLoveOrAll(player1Score, player2Score)) {
+            return this.isLoveOrAllText;
         } else {
-            if (player1Score == player2Score)
-                return "Deuce";
-            s = player1Score > player2Score ? firstPlayerName : secondPlayerName;
-            return ((player1Score - player2Score)*(player1Score - player2Score) == 1) ? "Advantage " + s : "Win for " + s;
+            this.deuceOrAdvantageOrWinText(player1Score, player2Score);
+           return this.deuceOrAdvantageOrWinText;
         }
     }
 
@@ -31,6 +29,28 @@ public class TennisGame3 implements ITennisGame {
             this.player1Score += 1;
         else
             this.player2Score += 1;
+
+    }
+
+    private boolean isLoveOrAll(int player1Score, int player2Score) {
+
+        if (player1Score < 4 && player2Score < 4 && !(player1Score + player2Score == 6)) {
+            String[] p = new String[]{"Love", "Fifteen", "Thirty", "Forty"};
+            String s = p[player1Score];
+            this.isLoveOrAllText = (player1Score == player2Score) ? s + "-All" : s + "-" + p[player2Score];
+            return true;
+        }
+        return false;
+    }
+
+
+    private void deuceOrAdvantageOrWinText(int player1Score, int player2Score) {
+        if (player1Score == player2Score) {
+            this.deuceOrAdvantageOrWinText = "Deuce";
+        } else  {
+            String s = player1Score > player2Score ? firstPlayerName : secondPlayerName;
+            this.deuceOrAdvantageOrWinText = ((player1Score - player2Score)*(player1Score - player2Score) == 1) ? "Advantage " + s : "Win for " + s;
+        }
 
     }
 
