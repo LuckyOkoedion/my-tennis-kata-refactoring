@@ -3,7 +3,9 @@ import static org.junit.Assert.*;
 import java.util.Arrays;
 import java.util.Collection;
 
-import interfaces.ITennisGame;
+import app.TennisGame3;
+import app.dto.GameState;
+import app.interfaces.ITennisGame;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -81,7 +83,8 @@ public class TennisTest {
 
     @Test
     public void checkAllScoresTennisGame3() {
-        TennisGame3 game = new TennisGame3("player1", "player2");
+        GameState state = new GameState();
+        TennisGame3 game = new TennisGame3("player1", "player2", state);
         checkAllScores(game);
     }
 

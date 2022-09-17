@@ -1,4 +1,4 @@
-package interfaces;
+package app.interfaces;
 
 public interface ITennisGame {
     void wonPoint(String playerName);
