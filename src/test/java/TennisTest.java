@@ -5,7 +5,7 @@ import java.util.Collection;
 
 import app.TennisGame3;
 import app.dto.GameState;
-import app.interfaces.ITennisGame;
+import app.dto.ScoreDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -68,7 +68,7 @@ public class TennisTest {
         });
     }
 
-    public void checkAllScores(ITennisGame game) {
+    public void checkAllScores(TennisGame3 game) {
         int highestScore = Math.max(this.player1Score, this.player2Score);
         for (int i = 0; i < highestScore; i++) {
             if (i < this.player1Score)
@@ -76,7 +76,10 @@ public class TennisTest {
             if (i < this.player2Score)
                 game.wonPoint("player2");
         }
-        assertEquals(this.expectedScore, game.getScore());
+        ScoreDto input = new ScoreDto();
+        input.setPlayer1Score(game.getGameState().getPlayer1Score());
+        input.setPlayer2Score(game.getGameState().getPlayer2Score());
+        assertEquals(this.expectedScore, game.getScore(input));
     }
 
 

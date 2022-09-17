@@ -1,6 +1,6 @@
 package app.interfaces;
 
 public interface Iscore {
-    String scoreTextGetter();
-    void scoreTextSetter();
+    String scoreTextGetter(); // used for polymorphism
+    void scoreTextSetter(); // used for organisation
 }

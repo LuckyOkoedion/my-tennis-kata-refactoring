@@ -1,6 +1,7 @@
 package app;
 
 import app.dto.GameState;
+import app.dto.ScoreDto;
 import app.interfaces.ITennisGame;
 
 public class TennisGame3 implements ITennisGame {
@@ -13,14 +14,11 @@ public class TennisGame3 implements ITennisGame {
         gameState.setSecondPlayerName(secondPlayerName);
     }
 
-    public String getScore() {
 
-        if (isLoveOrAll(gameState.getPlayer1Score(), gameState.getPlayer2Score())) {
-            return gameState.getIsLoveOrAllText();
-        } else {
-            this.deuceOrAdvantageOrWinText(gameState.getPlayer1Score(), gameState.getPlayer2Score());
-           return gameState.getDeuceOrAdvantageOrWinText();
-        }
+
+    @Override
+    public GameState getGameState() {
+        return gameState;
     }
 
     public void wonPoint(String playerName) {
@@ -36,29 +34,14 @@ public class TennisGame3 implements ITennisGame {
 
     }
 
-    private boolean isLoveOrAll(int player1Score, int player2Score) {
+    @Override
+    public String getScore(ScoreDto theScore) {
 
-        if (player1Score < 4 && player2Score < 4 && !(player1Score + player2Score == 6)) {
-            String[] p = new String[]{"Love", "Fifteen", "Thirty", "Forty"};
-            String s = p[player1Score];
-            String result = (player1Score == player2Score) ? s + "-All" : s + "-" + p[player2Score];
-            gameState.setIsLoveOrAllText(result);
-            return true;
-        }
-        return false;
-    }
-
-
-    private void deuceOrAdvantageOrWinText(int player1Score, int player2Score) {
-        if (player1Score == player2Score) {
-            gameState.setDeuceOrAdvantageOrWinText("Deuce");
-        } else  {
-            String s = player1Score > player2Score ? gameState.getFirstPlayerName() : gameState.getSecondPlayerName();
-            String result = ((player1Score - player2Score)*(player1Score - player2Score) == 1) ? "Advantage " + s : "Win for " + s;
-            gameState.setDeuceOrAdvantageOrWinText(result);
-        }
+        ScoreDto checkscore = theScore.setIfLoveOrAll(theScore, gameState);
+        return checkscore.getScore(theScore, gameState);
 
     }
+
 
 }
 
